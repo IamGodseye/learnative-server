@@ -10,7 +10,8 @@
   "author": "",
   "license": "ISC",
   "engines": {
-    "node": "14.15.4"
+    "node": "14.15.4",
+    "npm":"7.21.0"
   },
   "dependencies": {
     "aws-sdk": "^2.969.0",
