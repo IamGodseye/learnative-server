@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import { requireSignin } from "../middlewares";
 const router = express.Router();
 import {
@@ -11,19 +12,10 @@ import {
   resetPassword,
 } from "../controllers/auth";
 
-router.post("/register", register);
-router.post("/login", login);
-router.get("/logout", logout);
-router.get(
-  "/current-user",
-  (req, res, next) => {
-    console.log(req.cookies);
-    if (!req.cookies.token) return res.json({ ok: false });
-    next();
-  },
-  requireSignin,
-  currentUser
-);
+router.post("/register", cors(),register);
+router.post("/login", cors(), login);
+router.get("/logout", cors(), logout);
+router.get("/current-user", cors(), requireSignin, currentUser);
 router.get("/send-email", sendTestEmail);
 router.post("/forgot-password", forgotPassword);
 router.post("/reset-password", resetPassword);
