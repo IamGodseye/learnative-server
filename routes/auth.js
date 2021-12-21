@@ -1,7 +1,7 @@
 import express from "express";
 import { requireSignin } from "../middlewares";
 const router = express.Router();
-import optionHandler from "./../utils/auth";
+
 import {
   register,
   login,

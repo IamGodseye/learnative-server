@@ -2,7 +2,7 @@ import express from "express";
 import formidable from "express-formidable";
 import { requireSignin, isInstructor, isEnrolled } from "../middlewares";
 const router = express.Router();
-import optionHandler from "./../utils/auth";
+
 import {
   uploadImage,
   removeImage,
