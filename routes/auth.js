@@ -15,7 +15,19 @@ import {
 router.post("/register", register);
 router.post("/login", login);
 router.get("/logout", logout);
-router.get("/current-user", optionHandler, requireSignin, currentUser);
+router.get(
+  "/current-user",
+  (req, res, next) => {
+    if ("OPTIONS" === req.method) {
+      //respond with 200
+      res.send(200);
+    } else {
+      next();
+    }
+  },
+  requireSignin,
+  currentUser
+);
 router.get("/send-email", sendTestEmail);
 router.post("/forgot-password", forgotPassword);
 router.post("/reset-password", resetPassword);
