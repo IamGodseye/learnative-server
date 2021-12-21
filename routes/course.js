@@ -2,6 +2,7 @@ import express from "express";
 import formidable from "express-formidable";
 import { requireSignin, isInstructor, isEnrolled } from "../middlewares";
 const router = express.Router();
+import optionHandler from "./../utils/auth";
 import {
   uploadImage,
   removeImage,
@@ -52,16 +53,7 @@ router.post("/free-enrollment/:courseId", requireSignin, freeEnrollment);
 router.post("/paid-enrollment/:courseId", requireSignin, paidEnrollment);
 router.get("/stripe-success/:courseId", requireSignin, stripeSuccess);
 
-router.get(
-  "/user-courses",
-  (req, res, next) => {
-    console.log(req.cookies);
-    if (!req.cookies.token) return res.json({ ok: false });
-    next();
-  },
-  requireSignin,
-  userCourses
-);
+router.get("/user-courses", optionHandler, requireSignin, userCourses);
 router.get("/user/course/:slug", requireSignin, isEnrolled, read);
 
 router.post("/mark-completed", requireSignin, markCompleted);
