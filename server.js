@@ -1,5 +1,7 @@
 import express from "express";
 import cors from "cors";
+const router = express.Router();
+router.options(cors());
 const morgan = require("morgan");
 require("dotenv").config();
 import mongoose from "mongoose";
