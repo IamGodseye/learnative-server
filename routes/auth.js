@@ -12,7 +12,7 @@ import {
   resetPassword,
 } from "../controllers/auth";
 
-router.post("/register", cors(),register);
+router.post("/register", cors(), register);
 router.post("/login", cors(), login);
 router.get("/logout", cors(), logout);
 router.get("/current-user", cors(), requireSignin, currentUser);
