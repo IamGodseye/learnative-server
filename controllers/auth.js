@@ -43,7 +43,7 @@ export const login = async (req, res) => {
   try {
     // console.log(req.body);
     const { email, password } = req.body;
-    const user = await User.findOne({ email }).exec();
+    let user = await User.findOne({ email }).exec();
     if (!user) return res.status(400).send("No user found");
 
     const match = await comparePassword(password, user.password);
@@ -65,8 +65,10 @@ export const login = async (req, res) => {
       //secure will only work in HTTPS
     });
 
+    // user = { ...user, token: token };
     //send user as json
-    res.json({ user, token });
+    console.log(user);
+    res.json(user);
   } catch (err) {
     console.log(err);
     return res.status(400).send("Error... Try Again...");
