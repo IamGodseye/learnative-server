@@ -19,7 +19,7 @@ router.post("/register", cors(corsOptions), register);
 router.post("/login", cors(corsOptions), login);
 router.get("/logout", logout);
 
-router.get("/current-user", cors(corsOptions), requireSignin, currentUser);
+router.get("/current-user", cors(corsOptions), currentUser);
 router.get("/send-email", sendTestEmail);
 router.post("/forgot-password", forgotPassword);
 router.post("/reset-password", resetPassword);

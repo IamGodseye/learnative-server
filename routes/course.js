@@ -52,8 +52,11 @@ router.get("/check-enrollment/:courseId", requireSignin, checkEnrollment);
 router.post("/free-enrollment/:courseId", requireSignin, freeEnrollment);
 router.post("/paid-enrollment/:courseId", requireSignin, paidEnrollment);
 router.get("/stripe-success/:courseId", requireSignin, stripeSuccess);
-
-router.get("/user-courses", requireSignin, userCourses);
+var corsOptions = {
+  origin: "https://learnative-client.vercel.app",
+  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+router.get("/user-courses", cors(corsOptions), userCourses);
 router.get("/user/course/:slug", requireSignin, isEnrolled, read);
 
 router.post("/mark-completed", requireSignin, markCompleted);
