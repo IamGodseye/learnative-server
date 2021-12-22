@@ -66,7 +66,7 @@ export const login = async (req, res) => {
     });
 
     //send user as json
-    res.json(user);
+    res.json({ user, token });
   } catch (err) {
     console.log(err);
     return res.status(400).send("Error... Try Again...");
