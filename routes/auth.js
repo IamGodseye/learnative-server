@@ -27,9 +27,7 @@ router.get(
   //   next();
   // },
   requireSignin,
-  () => {
-    console.log("Autho op");
-  },
+
   currentUser
 );
 router.get("/send-email", sendTestEmail);
