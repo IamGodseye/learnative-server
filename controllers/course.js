@@ -94,6 +94,7 @@ export const read = async (req, res) => {
     const course = await Course.findOne({ slug: req.params.slug })
       .populate("instructor", "_id name")
       .exec();
+    console.log(course);
     res.json(course);
   } catch (err) {
     console.log(err);
@@ -178,22 +179,41 @@ export const removeVideo = async (req, res) => {
 export const addLesson = async (req, res) => {
   try {
     const { slug, instructorId } = req.params;
-    const { title, content, video } = req.body;
+    const { title, content, video, youtubeLink } = req.body;
     if (req.user._id != req.params.instructorId) {
       return res.status(400).send("Unauthorised");
     }
+    console.log(video, youtubeLink);
+    if (youtubeLink !== "") {
+      console.log("YT");
+      const video1 = { Location: youtubeLink };
+      const updated = await Course.findOneAndUpdate(
+        { slug },
+        {
+          $push: {
+            lessons: { title, content, video: video1, slug: slugify(title) },
+          },
+        },
+        { new: true }
+      )
+        .populate("instructor", "_id name")
+        .exec();
 
-    const updated = await Course.findOneAndUpdate(
-      { slug },
-      {
-        $push: { lessons: { title, content, video, slug: slugify(title) } },
-      },
-      { new: true }
-    )
-      .populate("instructor", "_id name")
-      .exec();
+      res.json(updated);
+    } else if (video) {
+      console.log("Video");
+      const updated = await Course.findOneAndUpdate(
+        { slug },
+        {
+          $push: { lessons: { title, content, video, slug: slugify(title) } },
+        },
+        { new: true }
+      )
+        .populate("instructor", "_id name")
+        .exec();
 
-    res.json(updated);
+      res.json(updated);
+    }
   } catch (err) {
     console.log(err);
     return res.status(400).send("Add lesson failed");
@@ -404,21 +424,26 @@ export const paidEnrollment = async (req, res) => {
 
 export const stripeSuccess = async (req, res) => {
   try {
-    const course = Course.findById(req.params.courseId).exec();
-
+    const course = await Course.findById(req.params.courseId).exec();
+    console.log(req.user);
     const user = await User.findById(req.user._id).exec();
+    console.log(user, course);
+    // return res.json({ message: "Course mila op" });
+    // res.json({ success: true, course: course });
     if (!user.stripeSession.id) return res.sendStatus(400);
 
     const session = await stripe.checkout.sessions.retrieve(
       user.stripeSession.id
     );
+    console.log("STRIPE SUCCESS", session);
     if (session.payment_status === "paid") {
       await User.findByIdAndUpdate(user._id, {
         $addToSet: { courses: course._id },
         $set: { stripeSession: {} },
       }).exec();
-      res.json({ success: true, course });
+      console.log(course);
     }
+    res.json({ success: true, course: course });
   } catch (err) {
     console.log("Stripe success error", err);
     res.json({ success: false });

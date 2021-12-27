@@ -17,7 +17,7 @@ export const makeInstructor = async (req, res) => {
       return_url: process.env.STRIPE_REDIRECT_URL,
       type: "account_onboarding",
     });
-    console.log(accountLink);
+    // console.log(accountLink);
     accountLink = Object.assign(accountLink, {
       "stripe_user[email]": user.email,
     });
@@ -32,7 +32,7 @@ export const getAccountStatus = async (req, res) => {
   try {
     const user = await User.findById(req.user._id).exec();
     const account = await stripe.accounts.retrieve(user.stripe_account_id);
-    console.log("account=> ", account);
+    // console.log("account=> ", account);
     if (!account.charges_enabled) {
       return res.getAccountStatus(401).send("Unauthorised");
     } else {
@@ -79,6 +79,7 @@ export const instructorCourses = async (req, res) => {
 };
 export const studentCount = async (req, res) => {
   try {
+    console.log(req.body);
     const users = await User.find({ courses: req.body.courseId })
       .select("_id")
       .exec();
@@ -109,6 +110,6 @@ export const instructorPayoutSettings = async (req, res) => {
     );
     res.json(loginLink.url);
   } catch (err) {
-    console.log("stripe payout settings login link err => , err");
+    console.log("stripe payout settings login link err => ", err);
   }
 };

@@ -11,6 +11,7 @@ const lessonSchema = new mongoose.Schema(
       maxlength: 300,
       required: true,
     },
+
     slug: {
       type: String,
       lowercase: true,
@@ -20,6 +21,9 @@ const lessonSchema = new mongoose.Schema(
       minlength: 200,
     },
     video: {},
+    youtubeLink: {
+      type: String,
+    },
     free_preview: {
       type: Boolean,
       default: false,
@@ -36,6 +40,11 @@ const courseSchema = new mongoose.Schema(
       minlength: 3,
       maxlength: 300,
       required: true,
+    },
+    shortInfo: {
+      type: String,
+      trim: true,
+      // required: true,
     },
     slug: {
       type: String,

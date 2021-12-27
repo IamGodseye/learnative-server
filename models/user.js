@@ -37,6 +37,10 @@ const userSchema = new Schema(
       default: "",
     },
     courses: [{ type: ObjectId, ref: "Course" }],
+    aboutMe: {
+      type: String,
+      default: "",
+    },
   },
   { timestamps: true }
 );

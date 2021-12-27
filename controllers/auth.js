@@ -4,7 +4,7 @@ import { hashPassword, comparePassword } from "../utils/auth";
 import jwt from "jsonwebtoken";
 import AWS from "aws-sdk";
 import { nanoid } from "nanoid";
-
+import axios from "axios";
 const awsConfig = {
   accessKeyId: process.env.AWS_ACCESS_KEY,
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
@@ -18,7 +18,13 @@ const SES = new AWS.SES(awsConfig);
 export const register = async (req, res) => {
   try {
     //     console.log(req.body);
-    const { name, email, password } = req.body;
+
+    const { name, email, password, token } = req.body;
+    const human = await validateHuman(token);
+    // console.log(human);
+    if (!human) {
+      return res.status(400).send("Your are not fooling us bot....");
+    }
     if (!name) return res.status(400).send("Name is required");
     if (!password || password.length < 6)
       return res
@@ -37,6 +43,17 @@ export const register = async (req, res) => {
     console.log(err);
     return res.status(400).send("Error... Try Again...");
   }
+};
+
+const validateHuman = async (token) => {
+  const secret = process.env.RECAPTCHA_SECRET;
+  const response = await axios.post(
+    `https://www.google.com/recaptcha/api/siteverify?secret=${secret}&response=${token}`
+  );
+  // console.log(response.data.success);
+  // const data = await response.json();
+
+  return response.data.success;
 };
 
 export const login = async (req, res) => {
@@ -129,7 +146,12 @@ export const sendTestEmail = async (req, res) => {
 
 export const forgotPassword = async (req, res) => {
   try {
-    const { email } = req.body;
+    const { email, token } = req.body;
+    const human = await validateHuman(token);
+    // console.log(human);
+    if (!human) {
+      return res.status(400).send("Your are not fooling us bot....");
+    }
     const shortCode = nanoid(6).toUpperCase();
     const user = await User.findOneAndUpdate(
       { email },
@@ -149,9 +171,12 @@ export const forgotPassword = async (req, res) => {
             Charset: "UTF-8",
             Data: `<html>
                 <h1>Reset password</h1>
+                <hr/>
                 <p>Use this code to reset your password</p>
                 <h2 style="color:red;">${shortCode}</h2>
-                <i>Onlien Education Marketplace</i>
+                <hr/>
+                <i>Learnative</i>
+                
                 </html>`,
           },
         },

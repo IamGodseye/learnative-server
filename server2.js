@@ -12,7 +12,7 @@ const app = express();
 const csrfProtection = csrf({ cookie: true });
 //db connection
 mongoose
-  .connect(process.env.DATABASE, {})
+  .connect(process.env.DATABASE, { useUnifiedTopology: true })
   .then(() => console.log("DB Connected......."))
   .catch((err) => console.log("DB Connection Err=>", err));
 //apply middle-wares
