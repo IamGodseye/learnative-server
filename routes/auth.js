@@ -1,7 +1,6 @@
 import express from "express";
 import { requireSignin } from "../middlewares";
 const router = express.Router();
-import cors from "cors";
 import {
   register,
   login,
