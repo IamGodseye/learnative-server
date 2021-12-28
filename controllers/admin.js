@@ -14,3 +14,16 @@ export const currentAdmin = async (req, res) => {
     console.log(err);
   }
 };
+export const totalStudents = async (req, res) => {
+  try {
+    //     console.log(req.user);
+    const user = await User.findById(req.user._id).select("-password").exec();
+    const school = user.school;
+    console.log(user.school);
+    const students = await User.find({ school }); //.select("__v");
+    console.log(students);
+    return res.json({ numberOfStudents: students.length });
+  } catch (err) {
+    console.log(err);
+  }
+};

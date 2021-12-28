@@ -41,6 +41,10 @@ const userSchema = new Schema(
       type: String,
       default: "",
     },
+    school: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );

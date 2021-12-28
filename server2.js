@@ -1,4 +1,10 @@
 import express from "express";
+
+import cluster from "cluster";
+const os = require("os");
+const numCpus = os.cpus().length;
+console.log(numCpus);
+
 import cors from "cors";
 const morgan = require("morgan");
 require("dotenv").config();
@@ -7,6 +13,7 @@ import mongoose from "mongoose";
 import { readdirSync } from "fs";
 import cookieParser from "cookie-parser";
 import csrf from "csurf";
+
 //create express app
 const app = express();
 const csrfProtection = csrf({ cookie: true });

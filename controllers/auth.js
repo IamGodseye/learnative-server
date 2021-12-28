@@ -17,9 +17,9 @@ const SES = new AWS.SES(awsConfig);
 
 export const register = async (req, res) => {
   try {
-    //     console.log(req.body);
+    // console.log(req.body);
 
-    const { name, email, password, token } = req.body;
+    const { name, email, password, school, token } = req.body;
     const human = await validateHuman(token);
     // console.log(human);
     if (!human) {
@@ -32,9 +32,9 @@ export const register = async (req, res) => {
         .send("Password is required and should be min of 6 characters");
     let userExist = await User.findOne({ email }).exec();
     if (userExist) return res.status(400).send("Email is taken");
-
+    if (!school) return res.status(400).send("School name is required");
     const hashedPassword = await hashPassword(password);
-    const user = new User({ name, email, password: hashedPassword });
+    const user = new User({ name, email, password: hashedPassword, school });
     await user.save();
 
     //console.log("saved user", user);
@@ -84,7 +84,7 @@ export const login = async (req, res) => {
 
     // user = { ...user, token: token };
     //send user as json
-    console.log(user);
+    // console.log(user);
     res.json({ user: user, token: token });
   } catch (err) {
     console.log(err);
