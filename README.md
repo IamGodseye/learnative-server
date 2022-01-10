@@ -1,5 +1,5 @@
 # learnative-server
-Learnative - Online Learning marketplace for various courses.
+[Learnative](http://www.learnative.me/) - Online Learning marketplace for various courses.
 [Youtube](https://www.youtube.com/watch?v=GL18q2Fd-dw)
 Technologies used: 
 Front end: Nextjs , Backend: Nodejs,
