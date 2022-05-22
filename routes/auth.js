@@ -1,5 +1,5 @@
 import express from "express";
-import { requireSignin } from "../middlewares";
+import {requireSignin} from "../middlewares";
 const router = express.Router();
 import {
   register,

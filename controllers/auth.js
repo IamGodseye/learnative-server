@@ -1,4 +1,3 @@
-import { request } from "express";
 import User from "../models/user";
 import { hashPassword, comparePassword } from "../utils/auth";
 import jwt from "jsonwebtoken";

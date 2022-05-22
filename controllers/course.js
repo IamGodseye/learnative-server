@@ -334,7 +334,6 @@ export const courses = async (req, res) => {
   const all = await Course.find({ published: true })
     .limit(11)
     .populate("instructor", "_id name")
-    .populate("categories", "_id name")
     .exec();
   res.json(all);
 };

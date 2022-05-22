@@ -1,35 +1,45 @@
 {
-  "name": "server",
+  "name": "learnative-server",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "First install packages -> npm install Start this project -> npm start",
+  "main": "server.js",
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon -r esm server.js"
   },
-  "keywords": [],
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IamGodseye/learnative-server.git"
+  },
+  "author": "Ajay Ghiyad",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/IamGodseye/learnative-server/issues"
+  },
+  "homepage": "https://github.com/IamGodseye/learnative-server#readme",
   "dependencies": {
-    "aws-sdk": "^2.969.0",
-    "axios": "^0.24.0",
+    "aws-sdk": "^2.1122.0",
+    "axios": "^0.27.1",
     "bcrypt": "^5.0.1",
-    "bootstrap": "^5.1.0",
-    "cookie-parser": "^1.4.5",
+    "bcryptjs": "^2.4.3",
+    "bootstrap": "^5.1.3",
+    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "csurf": "^1.11.0",
-    "dotenv": "^10.0.0",
+    "dotenv": "^16.0.0",
     "esm": "^3.2.25",
-    "express": "^4.17.1",
+    "express": "^4.18.0",
     "express-formidable": "^1.2.0",
     "express-jwt": "^6.1.0",
     "jsonwebtoken": "^8.5.1",
-    "mongodb-client-encryption": "^1.2.7",
-    "mongoose": "^5.13.7",
+    "mongodb-client-encryption": "^2.1.0",
+    "mongoose": "^6.3.1",
+    "moongoose": "^0.0.5",
     "morgan": "^1.10.0",
-    "nanoid": "^3.1.25",
-    "nodemon": "^2.0.12",
-    "query-string": "^7.0.1",
-    "slugify": "^1.6.0",
-    "stripe": "^8.170.0"
+    "nanoid": "^3.3.3",
+    "nodemon": "^2.0.15",
+    "query-string": "^7.1.1",
+    "slugify": "^1.6.5",
+    "stripe": "^8.219.0"
   }
 }
